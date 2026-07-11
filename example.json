@@ -1,0 +1,22 @@
+{
+  "shapes": {
+    "pA": { "id": "pA", "type": "point", "p": { "x": 480, "y": 280 }, "label": "A", "style": { "stroke": "#8cff8c", "fill": "#020402", "width": 1.5 } },
+    "pB": { "id": "pB", "type": "point", "p": { "x": 720, "y": 280 }, "label": "B", "style": { "stroke": "#8cff8c", "fill": "#020402", "width": 1.5 } },
+    "pC": { "id": "pC", "type": "point", "p": { "x": 720, "y": 520 }, "label": "C", "style": { "stroke": "#8cff8c", "fill": "#020402", "width": 1.5 } },
+    "pD": { "id": "pD", "type": "point", "p": { "x": 480, "y": 520 }, "label": "D", "style": { "stroke": "#8cff8c", "fill": "#020402", "width": 1.5 } },
+    "pO": { "id": "pO", "type": "point", "p": { "x": 600, "y": 400 }, "label": "O", "style": { "stroke": "#8cff8c", "fill": "#020402", "width": 1.5 } },
+    "sq": { "id": "sq", "type": "polygon", "points": [ { "x": 480, "y": 280 }, { "x": 720, "y": 280 }, { "x": 720, "y": 520 }, { "x": 480, "y": 520 } ], "style": { "stroke": "#8cff8c", "fill": "#020402", "width": 1.5 } },
+    "sAC": { "id": "sAC", "type": "segment", "a": { "x": 480, "y": 280 }, "b": { "x": 720, "y": 520 }, "style": { "stroke": "#8cff8c", "fill": "#020402", "width": 1.5 } },
+    "sBD": { "id": "sBD", "type": "segment", "a": { "x": 720, "y": 280 }, "b": { "x": 480, "y": 520 }, "style": { "stroke": "#8cff8c", "fill": "#020402", "width": 1.5 }, "hidden": true },
+    "cIn": { "id": "cIn", "type": "circle", "c": { "x": 600, "y": 400 }, "r": 120, "style": { "stroke": "#8cff8c", "fill": "#020402", "width": 1.5 } },
+    "arc1": { "id": "arc1", "type": "arc", "c": { "x": 600, "y": 400 }, "r": 120, "a0": -1.5707963267948966, "a1": 0, "style": { "stroke": "#8cff8c", "fill": "#020402", "width": 1.5 } },
+    "angB": { "id": "angB", "type": "angleLabel", "vertex": { "x": 720, "y": 280 }, "dirA": { "x": -1, "y": 0 }, "dirB": { "x": 0, "y": 1 }, "text": "90°", "right": true, "style": { "stroke": "#8cff8c", "fill": "#020402", "width": 1.5 } },
+    "angA": { "id": "angA", "type": "angleLabel", "vertex": { "x": 480, "y": 280 }, "dirA": { "x": 1, "y": 0 }, "dirB": { "x": 0.7071067811865476, "y": 0.7071067811865476 }, "text": "45°", "style": { "stroke": "#8cff8c", "fill": "#020402", "width": 1.5 } },
+    "tAB": { "id": "tAB", "type": "tick", "a": { "x": 480, "y": 280 }, "b": { "x": 720, "y": 280 }, "count": 2, "style": { "stroke": "#8cff8c", "fill": "#020402", "width": 1.5 } },
+    "tBC": { "id": "tBC", "type": "tick", "a": { "x": 720, "y": 280 }, "b": { "x": 720, "y": 520 }, "count": 2, "style": { "stroke": "#8cff8c", "fill": "#020402", "width": 1.5 } },
+    "lbl1": { "id": "lbl1", "type": "label", "text": "a", "at": { "x": 600, "y": 262 }, "style": { "stroke": "#8cff8c", "fill": "#020402", "width": 1.5 } },
+    "lbl2": { "id": "lbl2", "type": "label", "text": "r", "at": { "x": 732, "y": 392 }, "style": { "stroke": "#8cff8c", "fill": "#020402", "width": 1.5 } },
+    "lbl3": { "id": "lbl3", "type": "label", "text": "正方形 ABCD（边长 a = 240）", "at": { "x": 600, "y": 560 }, "style": { "stroke": "#8cff8c", "fill": "#020402", "width": 1.5 } }
+  },
+  "order": [ "pA", "pB", "pC", "pD", "pO", "sq", "sAC", "sBD", "cIn", "arc1", "angB", "angA", "tAB", "tBC", "lbl1", "lbl2", "lbl3" ]
+}
