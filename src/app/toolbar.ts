@@ -47,6 +47,7 @@ export function buildToolbar(opts: { editor: Editor; tools: ToolRegistry; fileIn
     bar.appendChild(button);
   };
 
+  action('X', 'Delete selected (X / Backspace)', () => editor.deleteSelected());
   action('Z', 'Undo (Z)', () => editor.undo());
   action('R', 'Redo (R)', () => editor.redo());
   action('E', 'Export JSON (E)', () => editor.exportScene());
