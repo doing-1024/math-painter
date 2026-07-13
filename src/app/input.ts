@@ -138,6 +138,16 @@ export class InputController {
       this.editor.undo();
       return;
     }
+    if ((event.ctrlKey || event.metaKey) && key === 'c') {
+      event.preventDefault();
+      this.editor.copySelection();
+      return;
+    }
+    if ((event.ctrlKey || event.metaKey) && key === 'v') {
+      event.preventDefault();
+      this.editor.paste();
+      return;
+    }
     if (event.ctrlKey || event.metaKey || event.altKey) return;
     // All single-key bindings are in the left half of the keyboard so the
     // left hand can drive them while the right hand stays on the mouse.

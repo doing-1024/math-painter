@@ -62,6 +62,23 @@ export function addShapeCommand(scene: Scene, shape: Shape): Command {
   };
 }
 
+export function addShapesCommand(scene: Scene, shapes: Shape[]): Command {
+  return {
+    do() {
+      for (const shape of shapes) {
+        scene.shapes[shape.id] = shape;
+        if (!scene.order.includes(shape.id)) scene.order.push(shape.id);
+      }
+    },
+    undo() {
+      for (const shape of shapes) {
+        delete scene.shapes[shape.id];
+        scene.order = scene.order.filter((id) => id !== shape.id);
+      }
+    },
+  };
+}
+
 export function replaceShapesCommand(
   scene: Scene,
   before: Map<string, Shape>,

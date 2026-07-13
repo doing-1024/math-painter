@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { CommandStack, addShapeCommand, replaceShapesCommand, deleteShapesCommand } from './commands';
+import { CommandStack, addShapeCommand, addShapesCommand, replaceShapesCommand, deleteShapesCommand } from './commands';
 import type { Scene, PointShape } from './types';
 
 function emptyScene(): Scene {
@@ -52,6 +52,19 @@ describe('commands', () => {
     stack.push(deleteShapesCommand(scene, [scene.shapes.s1], [...scene.order]));
     expect(scene.order).toEqual(['s2']);
     stack.undo();
+    expect(scene.order).toEqual(['s1', 's2']);
+  });
+
+  it('addShapes pushes several and a single undo removes all', () => {
+    const scene = emptyScene();
+    const stack = new CommandStack();
+    stack.push(addShapesCommand(scene, [point('s1', 0, 0), point('s2', 1, 1)]));
+    expect(scene.order).toEqual(['s1', 's2']);
+    stack.undo();
+    expect(scene.order).toEqual([]);
+    expect(scene.shapes.s1).toBeUndefined();
+    expect(scene.shapes.s2).toBeUndefined();
+    stack.redo();
     expect(scene.order).toEqual(['s1', 's2']);
   });
 

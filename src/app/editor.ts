@@ -1,10 +1,10 @@
 import type { Scene, Shape, Vec } from '../core/types';
-import { CommandStack, addShapeCommand, replaceShapesCommand, deleteShapesCommand } from '../core/commands';
+import { CommandStack, addShapeCommand, addShapesCommand, replaceShapesCommand, deleteShapesCommand } from '../core/commands';
 import { IdGenerator } from '../core/ids';
 import { cloneShape } from '../core/util';
 import { pickPoint } from '../core/snap';
 import { parseScene, serializeScene, MAX_IMPORT_BYTES, ParseError } from '../io/scene-file';
-import { getShapeDefinition } from '../core/shapes/registry';
+import { getShapeDefinition, translateShape } from '../core/shapes/registry';
 import { sceneToSVG, type SVGOptions } from '../io/svg';
 import { renderSceneToCanvas, type ExportOptions } from '../io/canvas';
 import { Selection } from './selection';
@@ -22,6 +22,7 @@ export class Editor implements EditorContext {
   viewport = new Viewport();
   commands: CommandStack;
   idgen = new IdGenerator();
+  private clipboard: Shape[] = [];
   activeTool: Tool;
   lastSnap: Vec | null = null;
   hoverId: string | null = null;
@@ -156,6 +157,43 @@ export class Editor implements EditorContext {
   deleteSelected(): void {
     const ids = this.selection.list().filter((id) => this.scene.shapes[id]);
     if (ids.length) this.deleteShapes(ids);
+  }
+
+  /** Copy the current selection into an internal clipboard. Each copied shape
+   * gets a fresh id so a later paste never collides with the originals. */
+  copySelection(): void {
+    const ids = this.selection.list().filter((id) => this.scene.shapes[id]);
+    if (!ids.length) {
+      this.setStatus('COPY: 未选择图形');
+      return;
+    }
+    this.clipboard = ids.map((id) => {
+      const s = cloneShape(this.scene.shapes[id]);
+      s.id = this.idgen.next();
+      return s;
+    });
+    this.setStatus(`COPIED ${this.clipboard.length}`);
+  }
+
+  /** Paste the clipboard as new shapes, offset a little so they don't sit
+   * exactly on the originals. Each paste reassigns ids, so repeated paste
+   * keeps producing distinct shapes. The whole paste is one undo step. */
+  paste(): void {
+    if (!this.clipboard.length) {
+      this.setStatus('PASTE: 剪贴板为空');
+      return;
+    }
+    const d = 16 / this.viewport.scale;
+    const delta: Vec = { x: d, y: d };
+    const added = this.clipboard.map((s) => {
+      const c = cloneShape(s);
+      c.id = this.idgen.next();
+      return translateShape(c, delta);
+    });
+    this.commands.push(addShapesCommand(this.scene, added));
+    this.selection.set(added.map((s) => s.id));
+    this.setStatus(`PASTED ${added.length}`);
+    this.draw();
   }
 
   /** Show a small choice menu and resolve with the chosen option key (or null
