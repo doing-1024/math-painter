@@ -73,6 +73,28 @@ plugins/<name>/
 - The entry `mp.config.json` `entry` path is relative to the plugin base, e.g.
   `plugins/arrow/index.js`.
 
+### Build & bundling
+
+Plugins are authored as multi-file TypeScript for maintainability, but the
+`math-painter-ext` build **bundles each plugin into a single ES module** with
+esbuild (`npm run build`). The host loads that one self-contained file via a
+blob URL, so the plugin must not rely on relative imports at runtime —
+esbuild inlines them. Shared helpers (`shared/geom`, `shared/style`) and any
+npm dependency (e.g. `katex`) are bundled in.
+
+If a plugin fetches **external assets** (CSS, fonts, wasm) from its deployed
+origin, it must compose the URL from `globalThis.__MP_EXT_BASE__` (the host
+app sets this to the plugin's origin before importing) and fall back to
+`import.meta.url` only when that global is absent:
+
+```ts
+const hostBase = (globalThis as { __MP_EXT_BASE__?: string }).__MP_EXT_BASE__;
+const assetBase = (hostBase ?? new URL('../../assets/', import.meta.url).href) + 'assets/';
+```
+
+When the core is published to npm, switch type imports to
+`import type { … } from 'math-painter'`.
+
 ### Types
 
 `math-painter` is not published to npm, so a plugin references the contract

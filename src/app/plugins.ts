@@ -107,6 +107,10 @@ export class PluginManager {
       code = await res.text();
       await this.cachePut(url, code);
     }
+    // Tell bundled plugins where their external assets live (e.g. KaTeX
+    // CSS/fonts). Read once at module top-level, so set it before importing.
+    const base = official ? this.officialBase : new URL(url).origin;
+    (globalThis as { __MP_EXT_BASE__?: string }).__MP_EXT_BASE__ = base;
     const mod = await this.loadModule(code);
     if (typeof mod.default !== 'function') throw new Error('plugin has no default export');
     mod.default(this.mp);
