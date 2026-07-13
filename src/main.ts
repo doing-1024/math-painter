@@ -1,6 +1,7 @@
 import './styles.css';
 import './core/shapes';
 import { Editor } from './app/editor';
+import { LabelLayer } from './app/label-layer';
 import { CanvasRenderer } from './render/renderer';
 import { InputController } from './app/input';
 import { buildToolbar } from './app/toolbar';
@@ -18,6 +19,7 @@ app.innerHTML = `
     <aside class="toolbar" aria-label="tools"></aside>
     <section class="stage">
       <canvas id="canvas"></canvas>
+      <div class="labels" id="labels"></div>
       <div class="status" id="status"></div>
     </section>
     <input id="file" type="file" accept="application/json" hidden />
@@ -25,18 +27,20 @@ app.innerHTML = `
 `;
 
 const canvas = document.querySelector<HTMLCanvasElement>('#canvas');
+const labelsEl = document.querySelector<HTMLElement>('#labels');
 const statusEl = document.querySelector<HTMLElement>('#status');
 const fileInput = document.querySelector<HTMLInputElement>('#file');
-if (!canvas || !statusEl || !fileInput) throw new Error('missing ui nodes');
+if (!canvas || !labelsEl || !statusEl || !fileInput) throw new Error('missing ui nodes');
 
 const tools = new ToolRegistry();
 registerCoreTools(tools);
 
 const renderer = new CanvasRenderer(canvas);
-const editor = new Editor(tools, renderer, statusEl);
+const labelLayer = new LabelLayer(labelsEl);
+const editor = new Editor(tools, renderer, statusEl, labelLayer);
 const input = new InputController(canvas, editor, () => canvas.getBoundingClientRect(), fileInput);
 
-const mathPainter = createMathPainter(tools, input);
+const mathPainter = createMathPainter(tools, input, editor);
 const plugins = new PluginManager(mathPainter);
 plugins.onUpdates = (pending) => {
   renderUpdateToast(pending, (name) => {

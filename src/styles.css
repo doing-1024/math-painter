@@ -84,6 +84,30 @@ canvas {
   cursor: crosshair;
 }
 
+/* HTML overlay for label shapes. Sits above the canvas but is transparent to
+   pointer events so the canvas keeps receiving drags/clicks. */
+.labels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.label {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font: 13px ui-monospace, SFMono-Regular, Menlo, monospace;
+  line-height: 1;
+  white-space: pre;
+  text-align: center;
+  user-select: none;
+}
+
+/* KaTeX inherits the label's 13px size, so math matches plain text. */
+.label .katex {
+  font-size: 1em;
+}
+
 .status {
   position: absolute;
   right: 0;

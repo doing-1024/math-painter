@@ -50,6 +50,7 @@ const mp: MathPainter = {
   registerShape: vi.fn(),
   registerTool: vi.fn(),
   bindKey: vi.fn(),
+  setFormulaRenderer: vi.fn(),
 };
 
 describe('PluginManager', () => {

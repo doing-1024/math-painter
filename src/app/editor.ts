@@ -7,6 +7,7 @@ import { parseScene, serializeScene, MAX_IMPORT_BYTES, ParseError } from '../io/
 import { getShapeDefinition } from '../core/shapes/registry';
 import { sceneToSVG } from '../io/svg';
 import { Selection } from './selection';
+import { LabelLayer } from './label-layer';
 
 const STORAGE_KEY = 'math-painter:v1';
 import { Viewport } from './viewport';
@@ -31,6 +32,7 @@ export class Editor implements EditorContext {
     readonly tools: ToolRegistry,
     private readonly renderer: CanvasRenderer,
     private readonly statusEl: HTMLElement,
+    private readonly labelLayer: LabelLayer,
   ) {
     this.commands = new CommandStack(() => {
       this.draw();
@@ -256,6 +258,8 @@ export class Editor implements EditorContext {
     }
     if (this.lastSnap) this.renderer.drawSnap(this.lastSnap);
     this.renderer.endWorld();
+    // Labels live in the HTML overlay, positioned in screen space.
+    this.labelLayer.render(this.scene, this.selection, this.viewport);
     this.statusEl.textContent = `${this.status} | tool=${this.activeTool.id} | n=${this.scene.order.length} | z=${this.viewport.scale.toFixed(2)} | undo=${this.commands.canUndo ? 'Y' : '-'}`;
   }
 

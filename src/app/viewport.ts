@@ -19,4 +19,10 @@ export class Viewport {
     this.x = mouse.x - worldX * this.scale;
     this.y = mouse.y - worldY * this.scale;
   }
+
+  /** World -> screen pixels (relative to the canvas origin). Used by the HTML
+   *  label layer, which overlays the canvas in screen space. */
+  toScreen(world: Vec): Vec {
+    return { x: world.x * this.scale + this.x, y: world.y * this.scale + this.y };
+  }
 }
