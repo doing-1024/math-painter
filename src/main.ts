@@ -62,14 +62,12 @@ buildToolbar({
 });
 input.attach();
 
-// Load the official list, re-activate installed plugins from cache (fast,
-// offline-friendly), then check for updates in the background without blocking
-// the core from starting.
+// Load the official list and re-activate installed plugins from cache (fast,
+// offline-friendly) without blocking the core from starting.
 tools.onChange(() => editor.draw());
 void plugins
   .fetchList()
   .then(() => plugins.loadInstalled())
-  .then(() => void plugins.checkUpdates())
   .catch((error) => {
     console.error('[math-painter] plugin init failed', error);
   });
@@ -91,3 +89,8 @@ window.addEventListener('keydown', (event) => {
 });
 
 editor.setTool('select');
+
+// Re-run the update check now that the editor/UI is fully initialized, so the
+// reminder is guaranteed to appear on open even if the earlier check raced
+// ahead of the plugin list load.
+void plugins.checkUpdates();
