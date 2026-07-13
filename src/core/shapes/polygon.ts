@@ -15,7 +15,7 @@ registerShape<PolygonShape>({
     return pointInPolygon(shape.points, world);
   },
   draw: (ctx, shape, opts) => {
-    ctx.strokeStyle = opts.active ? '#ffffff' : shape.style.stroke;
+    ctx.strokeStyle = shape.style.stroke;
     ctx.lineWidth = (opts.active ? 2.5 : 1.5) / opts.scale;
     ctx.beginPath();
     shape.points.forEach((point, index) => (index ? ctx.lineTo(point.x, point.y) : ctx.moveTo(point.x, point.y)));

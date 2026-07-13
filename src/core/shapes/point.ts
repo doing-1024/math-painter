@@ -9,7 +9,7 @@ registerShape<PointShape>({
   anchors: (shape) => [shape.p],
   hit: (shape, world, tolerance) => dist(world, shape.p) < tolerance,
   draw: (ctx, shape, opts) => {
-    ctx.strokeStyle = opts.active ? '#ffffff' : shape.style.stroke;
+    ctx.strokeStyle = shape.style.stroke;
     ctx.fillStyle = shape.style.fill;
     ctx.lineWidth = (opts.active ? 2.5 : 1.5) / opts.scale;
     ctx.beginPath();
@@ -17,7 +17,7 @@ registerShape<PointShape>({
     ctx.fill();
     ctx.stroke();
     if (shape.label) {
-      ctx.fillStyle = opts.active ? '#ffffff' : '#8cff8c';
+      ctx.fillStyle = shape.style.stroke;
       ctx.font = `${GLYPH_FONT_PX / opts.scale}px ui-monospace, SFMono-Regular, Menlo, monospace`;
       ctx.textAlign = 'left';
       ctx.textBaseline = 'middle';

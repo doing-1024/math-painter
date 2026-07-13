@@ -25,7 +25,7 @@ registerShape<AngleLabelShape>({
     const angA = Math.atan2(shape.dirA.y, shape.dirA.x);
     const angB = Math.atan2(shape.dirB.y, shape.dirB.x);
     const sweep = normalizeAngle(angB - angA);
-    ctx.strokeStyle = opts.active ? '#ffffff' : '#8cff8c';
+    ctx.strokeStyle = shape.style.stroke;
     ctx.lineWidth = (opts.active ? 2.5 : 1.5) / opts.scale;
     if (shape.right) {
       const s = RIGHT_SQUARE_PX / opts.scale;
@@ -56,7 +56,7 @@ registerShape<AngleLabelShape>({
       const baseR = shape.right ? RIGHT_SQUARE_PX : r;
       const labelR = baseR + LABEL_OFFSET / opts.scale;
       const at: Vec = { x: shape.vertex.x + labelR * Math.cos(mid), y: shape.vertex.y + labelR * Math.sin(mid) };
-      ctx.fillStyle = opts.active ? '#ffffff' : '#c8ffc8';
+      ctx.fillStyle = shape.style.stroke;
       ctx.font = `${GLYPH_FONT_PX / opts.scale}px ui-monospace, SFMono-Regular, Menlo, monospace`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';

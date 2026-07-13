@@ -13,7 +13,7 @@ registerShape<CircleShape>({
     return d < shape.r || Math.abs(d - shape.r) < tolerance;
   },
   draw: (ctx, shape, opts) => {
-    ctx.strokeStyle = opts.active ? '#ffffff' : shape.style.stroke;
+    ctx.strokeStyle = shape.style.stroke;
     ctx.lineWidth = (opts.active ? 2.5 : 1.5) / opts.scale;
     ctx.beginPath();
     ctx.arc(shape.c.x, shape.c.y, shape.r, 0, Math.PI * 2);

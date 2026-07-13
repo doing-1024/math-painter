@@ -38,14 +38,14 @@ registerShape<ArcShape>({
     if (opts.active) {
       ctx.save();
       ctx.globalAlpha = 0.22;
-      ctx.strokeStyle = '#ffffff';
+      ctx.strokeStyle = shape.style.stroke;
       ctx.lineWidth = 1.5 / opts.scale;
       ctx.beginPath();
       ctx.arc(shape.c.x, shape.c.y, shape.r, 0, Math.PI * 2);
       ctx.stroke();
       ctx.restore();
     }
-    ctx.strokeStyle = opts.active ? '#ffffff' : shape.style.stroke;
+    ctx.strokeStyle = shape.style.stroke;
     ctx.lineWidth = (opts.active ? 3.5 : 1.5) / opts.scale;
     ctx.beginPath();
     ctx.arc(shape.c.x, shape.c.y, shape.r, shape.a0, shape.a0 + sweep, sweep < 0);

@@ -27,3 +27,8 @@ export const POINT_RADIUS_PX = 4;
 export const ARC_SAMPLES = 24;
 /** Maximum number of tick marks per edge. */
 export const MAX_TICK = 8;
+
+/** On-canvas colour for drawn shapes (white). */
+export const SHAPE_INK = '#ffffff';
+/** Colour used to highlight the current selection (geek green). */
+export const SHAPE_SELECT = '#0f0';

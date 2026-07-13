@@ -8,7 +8,7 @@ registerShape<SegmentShape>({
   anchors: (shape) => [shape.a, shape.b],
   hit: (shape, world, tolerance) => distToSegment(world, shape.a, shape.b) < tolerance,
   draw: (ctx, shape, opts) => {
-    ctx.strokeStyle = opts.active ? '#ffffff' : shape.style.stroke;
+    ctx.strokeStyle = shape.style.stroke;
     ctx.lineWidth = (opts.active ? 2.5 : 1.5) / opts.scale;
     ctx.beginPath();
     ctx.moveTo(shape.a.x, shape.a.y);

@@ -15,7 +15,7 @@ registerShape<TickShape>({
     const gap = TICK_GAP_PX / opts.scale;
     const mid = midpoint(shape.a, shape.b);
     const start = -((shape.count - 1) / 2) * gap;
-    ctx.strokeStyle = opts.active ? '#ffffff' : '#8cff8c';
+    ctx.strokeStyle = shape.style.stroke;
     ctx.lineWidth = (opts.active ? 2.5 : 1.5) / opts.scale;
     ctx.beginPath();
     for (let i = 0; i < shape.count; i++) {

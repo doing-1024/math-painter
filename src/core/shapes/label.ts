@@ -11,7 +11,7 @@ registerShape<LabelShape>({
   anchors: () => [],
   hit: (shape, world, tolerance) => dist(world, shape.at) < tolerance * 2,
   draw: (ctx, shape, opts) => {
-    ctx.fillStyle = opts.active ? '#ffffff' : '#c8ffc8';
+    ctx.fillStyle = shape.style.stroke;
     ctx.font = `${GLYPH_FONT_PX / opts.scale}px ui-monospace, SFMono-Regular, Menlo, monospace`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';

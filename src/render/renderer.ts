@@ -1,5 +1,6 @@
 import type { Shape, Vec } from '../core/types';
 import { anchorsOf, getShapeDefinition } from '../core/shapes/registry';
+import { SHAPE_INK, SHAPE_SELECT } from '../core/constants';
 import type { Viewport } from '../app/viewport';
 
 export interface Overlay {
@@ -96,15 +97,21 @@ export class CanvasRenderer implements Overlay {
     if (!definition) return;
     this.ctx.save();
     if (shape.hidden) this.ctx.globalAlpha = 0.22;
-    definition.draw(this.ctx, shape, { scale: this.scale, active });
+    // Drawn shapes are white; the selection is green. The effective colour is
+    // forced here (and passed through shape.style) so every shape type renders
+    // uniformly — base shapes stay white and selected shapes turn green,
+    // regardless of any colour stored on the shape.
+    const ink = active ? SHAPE_SELECT : SHAPE_INK;
+    const styled: Shape = { ...shape, style: { ...shape.style, stroke: ink, fill: ink } };
+    definition.draw(this.ctx, styled, { scale: this.scale, active });
     for (const anchor of anchorsOf(shape)) this.drawAnchor(anchor, active);
     this.ctx.restore();
   }
 
   drawAnchor(point: Vec, active: boolean): void {
     const size = (active ? 7 : 6) / this.scale;
-    this.ctx.fillStyle = active ? '#ffffff' : '#020402';
-    this.ctx.strokeStyle = active ? '#ffffff' : '#8cff8c';
+    this.ctx.fillStyle = active ? SHAPE_SELECT : '#ffffff';
+    this.ctx.strokeStyle = active ? SHAPE_SELECT : '#ffffff';
     this.ctx.lineWidth = 1.5 / this.scale;
     this.ctx.beginPath();
     this.ctx.rect(point.x - size / 2, point.y - size / 2, size, size);
