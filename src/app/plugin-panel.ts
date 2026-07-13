@@ -1,4 +1,4 @@
-import type { PluginManager } from './plugins';
+import type { PluginManager, PendingUpdate } from './plugins';
 
 /** Open the plugin panel: an in-page modal listing official plugins (with
  *  one-click install/uninstall) and an import box for third-party plugins. */
@@ -67,30 +67,49 @@ export function openPluginPanel(manager: PluginManager): void {
       const card = document.createElement('div');
       card.className = 'plugin-card';
       const installed = manager.isInstalled(m.name);
+      const pending = manager.pendingUpdates.find((p) => p.name === m.name);
       card.innerHTML = `
         <div class="plugin-name">${escapeHtml(m.title)} <span class="plugin-ver">v${escapeHtml(m.version)}</span></div>
         <div class="plugin-desc">${escapeHtml(m.description)}</div>
         <div class="plugin-meta">${escapeHtml(m.author ?? 'official')} · api≥${m.minApi}</div>`;
-      const btn = document.createElement('button');
-      btn.className = 'plugin-btn';
-      btn.textContent = installed ? '卸载' : '安装';
-      btn.addEventListener('click', async () => {
-        btn.disabled = true;
-        try {
-          if (installed) {
-            await manager.uninstall(m.name);
-            status.textContent = `已卸载 ${m.name}（刷新后完全移除）`;
-          } else {
-            await manager.installOfficial(m.name);
-            status.textContent = `已安装 ${m.name}`;
+      if (installed && pending) {
+        const up = document.createElement('button');
+        up.className = 'plugin-btn plugin-update';
+        up.textContent = `更新${pending.from ? ` v${escapeHtml(pending.from)}` : ''} → v${escapeHtml(pending.to)}`;
+        up.addEventListener('click', async () => {
+          up.disabled = true;
+          try {
+            await manager.updatePlugin(m.name);
+            status.textContent = `已更新 ${m.name} 到 v${escapeHtml(pending.to)}`;
+          } catch (error) {
+            status.textContent = `错误：${error instanceof Error ? error.message : String(error)}`;
+            up.disabled = false;
           }
           render();
-        } catch (error) {
-          status.textContent = `错误：${error instanceof Error ? error.message : String(error)}`;
-          btn.disabled = false;
-        }
-      });
-      card.appendChild(btn);
+        });
+        card.appendChild(up);
+      } else {
+        const btn = document.createElement('button');
+        btn.className = 'plugin-btn';
+        btn.textContent = installed ? '卸载' : '安装';
+        btn.addEventListener('click', async () => {
+          btn.disabled = true;
+          try {
+            if (installed) {
+              await manager.uninstall(m.name);
+              status.textContent = `已卸载 ${m.name}（刷新后完全移除）`;
+            } else {
+              await manager.installOfficial(m.name);
+              status.textContent = `已安装 ${m.name}`;
+            }
+            render();
+          } catch (error) {
+            status.textContent = `错误：${error instanceof Error ? error.message : String(error)}`;
+            btn.disabled = false;
+          }
+        });
+        card.appendChild(btn);
+      }
       grid.appendChild(card);
     }
   };
@@ -124,4 +143,50 @@ export function openPluginPanel(manager: PluginManager): void {
 
 function escapeHtml(s: string): string {
   return s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c] ?? c);
+}
+
+/** Names the user chose to ignore this session, so the toast stops nagging
+ *  without uninstalling or persisting the dismissal. */
+const dismissed = new Set<string>();
+
+/** Render the top-right update toast. Called whenever the set of pending
+ *  updates changes; passing an empty list removes the toast. `onUpdate` runs
+ *  when the user confirms an update from the toast. */
+export function renderUpdateToast(pending: PendingUpdate[], onUpdate: (name: string) => void): void {
+  const existing = document.getElementById('plugin-toast');
+  const visible = pending.filter((p) => !dismissed.has(p.name));
+  if (!visible.length) {
+    existing?.remove();
+    return;
+  }
+  const toast = existing ?? (() => {
+    const el = document.createElement('div');
+    el.id = 'plugin-toast';
+    document.body.appendChild(el);
+    return el;
+  })();
+  toast.innerHTML = '';
+  const head = document.createElement('div');
+  head.className = 'plugin-toast-head';
+  head.textContent = '插件更新可用';
+  toast.appendChild(head);
+  for (const p of visible) {
+    const row = document.createElement('div');
+    row.className = 'plugin-toast-row';
+    const text = document.createElement('span');
+    text.textContent = `${p.name}${p.from ? `  v${p.from}` : ''} → v${p.to}`;
+    const upd = document.createElement('button');
+    upd.className = 'plugin-toast-btn';
+    upd.textContent = '更新';
+    upd.addEventListener('click', () => onUpdate(p.name));
+    const ignore = document.createElement('button');
+    ignore.className = 'plugin-toast-btn plugin-toast-ignore';
+    ignore.textContent = '忽略';
+    ignore.addEventListener('click', () => {
+      dismissed.add(p.name);
+      renderUpdateToast(pending, onUpdate);
+    });
+    row.append(text, upd, ignore);
+    toast.appendChild(row);
+  }
 }

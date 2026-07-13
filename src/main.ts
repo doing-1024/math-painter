@@ -8,7 +8,7 @@ import { ToolRegistry } from './tools/registry';
 import { registerCoreTools } from './tools';
 import { createMathPainter } from './app/extension';
 import { PluginManager } from './app/plugins';
-import { openPluginPanel } from './app/plugin-panel';
+import { openPluginPanel, renderUpdateToast } from './app/plugin-panel';
 
 const app = document.querySelector<HTMLDivElement>('#app');
 if (!app) throw new Error('missing app root');
@@ -38,6 +38,17 @@ const input = new InputController(canvas, editor, () => canvas.getBoundingClient
 
 const mathPainter = createMathPainter(tools, input);
 const plugins = new PluginManager(mathPainter);
+plugins.onUpdates = (pending) => {
+  renderUpdateToast(pending, (name) => {
+    void plugins
+      .updatePlugin(name)
+      .then(() => {
+        if (editor.activeTool.id === name) editor.setTool(name);
+        else editor.draw();
+      })
+      .catch((error) => console.error('[math-painter] plugin update failed', name, error));
+  });
+};
 buildToolbar({
   editor,
   tools,
@@ -47,12 +58,17 @@ buildToolbar({
 });
 input.attach();
 
-// Load the official list + re-activate installed plugins. Fire-and-forget:
-// plugins are optional and must never block the core from starting.
+// Load the official list, re-activate installed plugins from cache (fast,
+// offline-friendly), then check for updates in the background without blocking
+// the core from starting.
 tools.onChange(() => editor.draw());
-void plugins.fetchList().then(() => plugins.loadInstalled()).catch((error) => {
-  console.error('[math-painter] plugin init failed', error);
-});
+void plugins
+  .fetchList()
+  .then(() => plugins.loadInstalled())
+  .then(() => void plugins.checkUpdates())
+  .catch((error) => {
+    console.error('[math-painter] plugin init failed', error);
+  });
 
 fileInput.addEventListener('change', async () => {
   const file = fileInput.files?.[0];

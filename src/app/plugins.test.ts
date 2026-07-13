@@ -117,4 +117,64 @@ describe('PluginManager', () => {
     await manager.uninstall('arrow');
     expect(manager.isInstalled('arrow')).toBe(false);
   });
+
+  it('loads from cache first so startup is fast and offline-friendly', async () => {
+    const env = makeEnv();
+    const calls: MathPainter[] = [];
+    const loader: ModuleLoader = async () => ({ default: (m) => calls.push(m) });
+    const manager = new PluginManager(mp, loader);
+    await manager.fetchList();
+    await manager.installOfficial('arrow'); // network + cache
+    // Simulate a fully offline reload: network fetches fail, but the list and
+    // plugin code were already cached by the first session.
+    env.fetch.mockImplementation(async () => ({ ok: false, status: 404, text: async () => '' }));
+    const manager2 = new PluginManager(mp, loader);
+    await manager2.fetchList(); // network fails -> falls back to cached list
+    await manager2.loadInstalled(); // must succeed from cache
+    expect(calls).toHaveLength(2);
+  });
+
+  it('checkUpdates reports nothing when versions match', async () => {
+    const manager = new PluginManager(mp, async () => ({ default: () => {} }));
+    await manager.fetchList();
+    await manager.installOfficial('arrow');
+    expect(await manager.checkUpdates()).toEqual([]);
+    expect(manager.pendingUpdates).toEqual([]);
+  });
+
+  it('checkUpdates prompts legacy installs that have no recorded version', async () => {
+    const manager = new PluginManager(mp, async () => ({ default: () => {} }));
+    await manager.fetchList();
+    localStorage.setItem('math-painter:plugins', JSON.stringify({ official: ['arrow'], thirdParty: [] }));
+    const pending = await manager.checkUpdates();
+    expect(pending).toEqual([{ name: 'arrow', from: undefined, to: '1.0.0', entry: 'plugins/arrow/index.js' }]);
+  });
+
+  it('checkUpdates detects a newer cloud version and updatePlugin re-activates', async () => {
+    const loader: ModuleLoader = async () => ({ default: () => {} });
+    const env = makeEnv();
+    const manager = new PluginManager(mp, loader);
+    await manager.fetchList(); // list = 1.0.0
+    await manager.installOfficial('arrow'); // records 1.0.0
+    // Cloud upgrades to 1.0.1.
+    env.fetch.mockImplementation(async (url: string) => {
+      if (url.endsWith('/plugins.json')) {
+        return { ok: true, status: 200, text: async () => JSON.stringify([{ name: 'arrow', title: 'Arrow', description: 'd', version: '1.0.1', minApi: 1, entry: 'plugins/arrow/index.js' }]) };
+      }
+      if (url === 'https://mp-ext.doi.l.cd/plugins/arrow/index.js') {
+        return { ok: true, status: 200, text: async () => 'code-arrow' };
+      }
+      return { ok: false, status: 404, text: async () => '' };
+    });
+    await manager.fetchList(); // this.list now 1.0.1
+    const onUpdates = vi.fn();
+    manager.onUpdates = onUpdates;
+    const pending = await manager.checkUpdates();
+    expect(pending).toEqual([{ name: 'arrow', from: '1.0.0', to: '1.0.1', entry: 'plugins/arrow/index.js' }]);
+    expect(onUpdates).toHaveBeenCalledWith(pending);
+    await manager.updatePlugin('arrow');
+    expect(manager.pendingUpdates).toEqual([]);
+    const enabled = JSON.parse(localStorage.getItem('math-painter:plugins') ?? '{}');
+    expect(enabled.official[0]).toEqual({ name: 'arrow', version: '1.0.1' });
+  });
 });
