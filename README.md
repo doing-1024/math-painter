@@ -18,7 +18,8 @@ The project is intentionally small: TypeScript, Vite, Canvas 2D, native DOM, a J
 ## Links
 
 - [Linux Do](https://linux.do/)
-- [Plugin guide (EXTENSIONS.md)](./EXTENSIONS.md)
+- [Plugin development docs (math-painter-ext/docs)](https://github.com/doing-1024/math-painter-ext/tree/main/docs)
+- [Host extension API (EXTENSIONS.md)](./EXTENSIONS.md)
 - [Official plugins repo](https://github.com/doing-1024/math-painter-ext)
 
 ## Development
