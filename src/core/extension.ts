@@ -2,13 +2,14 @@ import type { Shape } from './types';
 import type { ShapeDefinition } from './shapes/registry';
 import type { Tool } from '../tools/types';
 import type { FormulaRenderer } from './formula';
+import type { ExportOptions } from '../io/canvas';
 
 /**
  * Version of the frozen extension API. Plugins declare the minimum version
  * they require via `minApi`; the loader refuses to install a plugin that needs
  * a newer API than the running app. Bump only on breaking changes.
  */
-export const API_VERSION = 1;
+export const API_VERSION = 2;
 
 /**
  * The stable, frozen surface a plugin receives. A plugin module's default
@@ -29,4 +30,11 @@ export interface MathPainter {
    *  built-in label for `$$...$$` segments. Keeps heavy typesetting out of the
    *  core so cold start stays fast. */
   setFormulaRenderer(renderer: FormulaRenderer | null): void;
+  /** Render the current scene to an SVG string (white background, dark ink,
+   *  auto-cropped to content bounds). Used by export plugins. */
+  renderSVG(opts?: ExportOptions): string;
+  /** Render the current scene to a PNG-ready canvas (white background, black
+   *  ink, auto-cropped). Returns null when the scene is empty. Used by export
+   *  plugins. */
+  renderCanvas(opts?: ExportOptions): HTMLCanvasElement | null;
 }

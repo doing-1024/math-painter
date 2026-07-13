@@ -34,13 +34,17 @@ export default function activate(mp: MathPainter): void {
 depends on:
 
 ```ts
-export const API_VERSION = 1;
+export const API_VERSION = 2;
 
 export interface MathPainter {
   readonly apiVersion: number;
   registerShape<T extends Shape>(definition: ShapeDefinition<T>): void;
   registerTool(tool: Tool): void;
   bindKey(key: string, toolId: string): void;
+  setFormulaRenderer(renderer: FormulaRenderer | null): void;
+  // v2 (additive): scene rendering for export plugins
+  renderSVG(opts?: ExportOptions): string;
+  renderCanvas(opts?: ExportOptions): HTMLCanvasElement | null;
 }
 ```
 

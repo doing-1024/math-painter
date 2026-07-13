@@ -5,7 +5,8 @@ import { cloneShape } from '../core/util';
 import { pickPoint } from '../core/snap';
 import { parseScene, serializeScene, MAX_IMPORT_BYTES, ParseError } from '../io/scene-file';
 import { getShapeDefinition } from '../core/shapes/registry';
-import { sceneToSVG } from '../io/svg';
+import { sceneToSVG, type SVGOptions } from '../io/svg';
+import { renderSceneToCanvas, type ExportOptions } from '../io/canvas';
 import { Selection } from './selection';
 import { LabelLayer } from './label-layer';
 
@@ -295,15 +296,17 @@ export class Editor implements EditorContext {
     this.setStatus('HIDDEN: toggled');
   }
 
-  exportSVG(): void {
-    const svg = sceneToSVG(this.scene);
-    const blob = new Blob([svg], { type: 'image/svg+xml' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'math-painter.svg';
-    link.click();
-    URL.revokeObjectURL(url);
+  /** Return the scene as an SVG string (white background, dark ink, auto-cropped
+   *  to content bounds). The export plugin downloads it. */
+  exportSVGString(opts?: SVGOptions): string {
+    return sceneToSVG(this.scene, opts);
+  }
+
+  /** Render the scene to a PNG-ready canvas (white background, black ink,
+   *  auto-cropped). Returns null when the scene is empty. The export plugin
+   *  rasterizes it. */
+  exportCanvas(opts?: ExportOptions): HTMLCanvasElement | null {
+    return renderSceneToCanvas(this.scene, opts);
   }
 
   async importScene(file: File): Promise<void> {

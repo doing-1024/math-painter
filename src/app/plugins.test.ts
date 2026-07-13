@@ -51,6 +51,8 @@ const mp: MathPainter = {
   registerTool: vi.fn(),
   bindKey: vi.fn(),
   setFormulaRenderer: vi.fn(),
+  renderSVG: vi.fn(() => '<svg/>'),
+  renderCanvas: vi.fn(() => null),
 };
 
 describe('PluginManager', () => {

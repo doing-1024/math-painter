@@ -23,5 +23,7 @@ export function createMathPainter(tools: ToolRegistry, input: InputController, e
       setFormulaRenderer(renderer);
       editor.draw();
     },
+    renderSVG: (opts) => editor.exportSVGString(opts),
+    renderCanvas: (opts) => editor.exportCanvas(opts),
   };
 }

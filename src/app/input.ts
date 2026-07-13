@@ -161,8 +161,6 @@ export class InputController {
       this.editor.redo();
     } else if (key === 'e') {
       this.editor.exportScene();
-    } else if (key === 'f') {
-      this.editor.exportSVG();
     } else if (key === 'q') {
       this.fileInput.click();
     } else if (key === '1') {

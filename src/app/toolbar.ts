@@ -61,7 +61,6 @@ export function buildToolbar(opts: { editor: Editor; tools: ToolRegistry; fileIn
   action('Z', 'Undo (Z)', () => editor.undo());
   action('R', 'Redo (R)', () => editor.redo());
   action('E', 'Export JSON (E)', () => editor.exportScene());
-  action('F', 'Export SVG (F)', () => editor.exportSVG());
   action('Q', 'Import JSON (Q)', () => fileInput.click());
   action('1', 'Toggle hidden (1)', () => editor.toggleHidden());
   action('EXT', 'Plugins', () => onPlugins?.());
