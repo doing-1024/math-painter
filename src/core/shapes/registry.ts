@@ -84,3 +84,8 @@ export function shapeEdgeAt(shape: Shape, world: Vec): { a: Vec; b: Vec } | null
 export function nearestOnShape(shape: Shape, world: Vec): { point: Vec; dist: number } {
   return getShapeDefinition(shape.type)?.nearest(shape, world) ?? { point: world, dist: Infinity };
 }
+
+/** Sample points used to compute a shape's bounding box (for box selection). */
+export function shapeBBox(shape: Shape): Vec[] {
+  return getShapeDefinition(shape.type)?.bbox(shape) ?? [];
+}

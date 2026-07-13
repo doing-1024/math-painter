@@ -74,7 +74,8 @@
 - [x] 统一吸附（抽象选点）：core/snap.pickPoint（锚点优先 10px + 边回退 14px），所有选点工具（点/线/圆/多边形/弧/角/直角/测量/等长）及拖动均经 ctx.snap；新增 exclude 防自吸附；单测覆盖锚点/边/自由/排除
 
 ### 3. 编辑效率
-- [ ] 框选（rubber-band 多选，复用 Selection + Tool）
+- [x] 框选（rubber-band 多选，复用 Selection + Tool；V 工具空画布拖拽=框选，Ctrl/Shift 拖拽=叠加；Alt/空格/中键仍可平移）
+- [x] Ctrl/Shift+点击 多选/切换（PointerInput.ctrl + Selection.toggle）
 - [ ] 复制 / 粘贴（内部剪贴板，走 Command）
 - [ ] 极简样式微调：颜色 / 线宽（复用 Tool 机制，非重 Inspector）
 - [ ] 对齐 / 等距辅助（吸附增强）
@@ -94,7 +95,7 @@
 - [ ] 状态行增强：实时坐标、选中数、模式提示
 
 ### 7. 持久化与输出
-- [ ] 自动保存（localStorage / IndexedDB，冷启动秒开）
+- [x] 自动保存（localStorage，debounce 400ms；scene + viewport 一并持久化，启动恢复；beforeunload 兜底写盘）
 - [ ] 导出 PNG / SVG
 - [ ] 云同步 / 协作（最重，最后考虑）
 

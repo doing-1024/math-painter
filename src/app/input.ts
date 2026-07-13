@@ -35,6 +35,7 @@ export class InputController {
       button: event.button,
       shift: event.shiftKey,
       alt: event.altKey,
+      ctrl: event.ctrlKey || event.metaKey,
     };
   }
 
@@ -95,6 +96,7 @@ export class InputController {
         button: 0,
         shift: event.shiftKey,
         alt: event.altKey,
+        ctrl: event.ctrlKey || event.metaKey,
       }),
     );
     this.editor.draw();

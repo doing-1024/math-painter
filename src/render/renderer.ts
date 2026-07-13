@@ -13,6 +13,8 @@ export interface Overlay {
   drawDashedPolygon(points: Vec[]): void;
   drawPoint(point: Vec, color?: string): void;
   drawText(text: string, at: Vec, color?: string): void;
+  /** Dashed rectangle in world coordinates (rubber-band selection box). */
+  drawRect(x0: number, y0: number, x1: number, y1: number): void;
 }
 
 export class CanvasRenderer implements Overlay {
@@ -184,5 +186,13 @@ export class CanvasRenderer implements Overlay {
     this.ctx.textBaseline = 'middle';
     this.ctx.fillText(text, at.x, at.y);
     this.ctx.restore();
+  }
+
+  drawRect(x0: number, y0: number, x1: number, y1: number): void {
+    this.dashed(() => {
+      this.ctx.beginPath();
+      this.ctx.rect(Math.min(x0, x1), Math.min(y0, y1), Math.abs(x1 - x0), Math.abs(y1 - y0));
+      this.ctx.stroke();
+    });
   }
 }

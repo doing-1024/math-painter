@@ -7,6 +7,8 @@ import { parseScene, serializeScene, MAX_IMPORT_BYTES, ParseError } from '../io/
 import { getShapeDefinition } from '../core/shapes/registry';
 import { sceneToSVG } from '../io/svg';
 import { Selection } from './selection';
+
+const STORAGE_KEY = 'math-painter:v1';
 import { Viewport } from './viewport';
 import type { ToolRegistry } from '../tools/registry';
 import type { Tool, EditorContext } from '../tools/types';
@@ -23,16 +25,52 @@ export class Editor implements EditorContext {
   hoverId: string | null = null;
   status = 'READY';
   onToolChange?: (id: string) => void;
+  private saveTimer: ReturnType<typeof setTimeout> | null = null;
 
   constructor(
     readonly tools: ToolRegistry,
     private readonly renderer: CanvasRenderer,
     private readonly statusEl: HTMLElement,
   ) {
-    this.commands = new CommandStack(() => this.draw());
+    this.commands = new CommandStack(() => {
+      this.draw();
+      this.schedulePersist();
+    });
     const select = this.tools.get('select');
     if (!select) throw new Error('select tool missing');
     this.activeTool = select;
+    this.loadPersisted();
+    window.addEventListener('beforeunload', () => this.persist());
+  }
+
+  /** Persist the current scene + viewport to localStorage (debounced), so the
+   *  drawing survives a reload without an explicit save action. */
+  private schedulePersist(): void {
+    if (this.saveTimer) clearTimeout(this.saveTimer);
+    this.saveTimer = setTimeout(() => this.persist(), 400);
+  }
+
+  private persist(): void {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ scene: this.scene, viewport: this.viewport }));
+    } catch {
+      /* storage unavailable or over quota: ignore */
+    }
+  }
+
+  private loadPersisted(): void {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      const data = JSON.parse(raw) as { scene?: unknown; viewport?: Record<string, number> };
+      if (data.scene) {
+        this.scene = parseScene(data.scene);
+        this.idgen.advance(this.scene);
+      }
+      if (data.viewport) Object.assign(this.viewport, data.viewport);
+    } catch {
+      /* corrupt storage: ignore and start fresh */
+    }
   }
 
   setTool(id: string): void {
@@ -274,6 +312,7 @@ export class Editor implements EditorContext {
       this.selection.clear();
       this.commands.clear();
       this.setStatus('IMPORTED');
+      this.schedulePersist();
     } catch (error) {
       this.setStatus(error instanceof ParseError ? `IMPORT: ${error.message}` : 'IMPORT ERROR');
     }

@@ -11,6 +11,7 @@ export interface PointerInput {
   button: number;
   shift: boolean;
   alt: boolean;
+  ctrl: boolean;
 }
 
 export interface EditorContext {
