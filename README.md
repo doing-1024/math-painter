@@ -1,7 +1,5 @@
 # math-painter
 
-[![Powered by DartNode](https://dartnode.com/branding/DN-Open-Source-sm.png)](https://dartnode.com "Powered by DartNode - Free VPS for Open Source")
-
 Math Painter is a lightweight geometry drawing tool designed for fast, keyboard-driven diagram creation. It keeps the interface minimal and Vim-like, while focusing on precise construction, annotation, and clean export for math and geometry problems.
 
 The project is intentionally small: TypeScript, Vite, Canvas 2D, native DOM, a JSON scene graph, and a registry-based shape system. There is no UI framework and no heavy runtime dependency, so the app starts quickly and stays easy to extend.
@@ -15,6 +13,10 @@ The project is intentionally small: TypeScript, Vite, Canvas 2D, native DOM, a J
 - JSON import/export for editable scenes
 - Clean SVG export for publishing diagrams
 - Extensible `ShapeDefinition` registry for adding new geometry types
+
+## Links
+
+- [Linux Do](https://linux.do/)
 
 ## Development
 
