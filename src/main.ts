@@ -6,6 +6,9 @@ import { InputController } from './app/input';
 import { buildToolbar } from './app/toolbar';
 import { ToolRegistry } from './tools/registry';
 import { registerCoreTools } from './tools';
+import { createMathPainter } from './app/extension';
+import { PluginManager } from './app/plugins';
+import { openPluginPanel } from './app/plugin-panel';
 
 const app = document.querySelector<HTMLDivElement>('#app');
 if (!app) throw new Error('missing app root');
@@ -33,8 +36,23 @@ const renderer = new CanvasRenderer(canvas);
 const editor = new Editor(tools, renderer, statusEl);
 const input = new InputController(canvas, editor, () => canvas.getBoundingClientRect(), fileInput);
 
-buildToolbar({ editor, tools, fileInput, onPolygon: () => input.choosePolygon() });
+const mathPainter = createMathPainter(tools, input);
+const plugins = new PluginManager(mathPainter);
+buildToolbar({
+  editor,
+  tools,
+  fileInput,
+  onPolygon: () => input.choosePolygon(),
+  onPlugins: () => openPluginPanel(plugins),
+});
 input.attach();
+
+// Load the official list + re-activate installed plugins. Fire-and-forget:
+// plugins are optional and must never block the core from starting.
+tools.onChange(() => editor.draw());
+void plugins.fetchList().then(() => plugins.loadInstalled()).catch((error) => {
+  console.error('[math-painter] plugin init failed', error);
+});
 
 fileInput.addEventListener('change', async () => {
   const file = fileInput.files?.[0];
@@ -43,5 +61,13 @@ fileInput.addEventListener('change', async () => {
 });
 
 new ResizeObserver(() => editor.measure()).observe(canvas);
+
+window.addEventListener('keydown', (event) => {
+  if (event.target instanceof HTMLInputElement) return;
+  if (event.key === '`' && !(event.ctrlKey || event.metaKey || event.altKey)) {
+    event.preventDefault();
+    openPluginPanel(plugins);
+  }
+});
 
 editor.setTool('select');

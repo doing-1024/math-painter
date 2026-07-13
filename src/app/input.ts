@@ -7,6 +7,7 @@ import { PolygonTool } from '../tools/polygon';
 export class InputController {
   private pan: { startScreen: Vec; origin: Vec } | null = null;
   private spaceDown = false;
+  private readonly pluginKeys = new Map<string, string>();
 
   constructor(
     private readonly canvas: HTMLCanvasElement,
@@ -166,12 +167,22 @@ export class InputController {
       this.fileInput.click();
     } else if (key === '1') {
       this.editor.toggleHidden();
+    } else if (this.pluginKeys.has(key)) {
+      const id = this.pluginKeys.get(key)!;
+      if (this.editor.tools.get(id)) this.editor.setTool(id);
     }
   };
 
   private onKeyUp = (event: KeyboardEvent): void => {
     if (event.key === ' ') this.spaceDown = false;
   };
+
+  /** Register a plugin shortcut: a single key mapped to a (registered) tool id.
+   *  Built-in bindings take precedence, so a plugin key only fires when no
+   *  built-in action claims that key. */
+  bindPluginKey(key: string, toolId: string): void {
+    this.pluginKeys.set(key.toLowerCase(), toolId);
+  }
 
   /** Pressing G offers a choice between a regular and a free polygon. The
    *  selected mode is stored on the (persistent) PolygonTool instance, then the

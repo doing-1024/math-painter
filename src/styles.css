@@ -64,6 +64,13 @@ button {
   background: #24402a;
 }
 
+.tool-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: stretch;
+}
+
 .stage {
   position: relative;
   min-width: 0;
@@ -152,6 +159,160 @@ canvas {
 
 .choice-item:hover {
   background: #0a200a;
+}
+
+.plugin-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(2, 4, 2, 0.72);
+}
+
+.plugin-panel-inner {
+  width: min(520px, 92vw);
+  max-height: 86vh;
+  overflow: auto;
+  background: #050805;
+  border: 1px solid #24402a;
+  color: #8cff8c;
+  font: inherit;
+  font-size: 13px;
+}
+
+.plugin-panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  border-bottom: 1px solid #24402a;
+  color: #b6ffb6;
+  letter-spacing: 0.04em;
+}
+
+.plugin-close {
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 1px solid #24402a;
+  border-radius: 0;
+  color: #8cff8c;
+  background: #020402;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.plugin-close:hover {
+  color: #020402;
+  background: #8cff8c;
+}
+
+.plugin-status {
+  padding: 6px 12px;
+  min-height: 16px;
+  color: #b6ffb6;
+  border-bottom: 1px solid #1f3a1f;
+  font-size: 12px;
+}
+
+.plugin-section {
+  padding: 10px 12px;
+}
+
+.plugin-section h3 {
+  margin: 0 0 8px;
+  font-size: 12px;
+  font-weight: normal;
+  color: #6fae74;
+  letter-spacing: 0.06em;
+}
+
+.plugin-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.plugin-card {
+  padding: 8px;
+  border: 1px solid #24402a;
+  background: #020402;
+}
+
+.plugin-name {
+  color: #b6ffb6;
+}
+
+.plugin-ver {
+  color: #4f7a55;
+  font-size: 11px;
+}
+
+.plugin-desc {
+  margin: 4px 0;
+  color: #8cff8c;
+  font-size: 12px;
+}
+
+.plugin-meta {
+  color: #4f7a55;
+  font-size: 11px;
+  margin-bottom: 6px;
+}
+
+.plugin-btn {
+  width: 100%;
+  padding: 4px 0;
+  border: 1px solid #24402a;
+  border-radius: 0;
+  color: #8cff8c;
+  background: #020402;
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+}
+
+.plugin-btn:hover {
+  color: #020402;
+  background: #8cff8c;
+  border-color: #8cff8c;
+}
+
+.plugin-import {
+  display: flex;
+  gap: 6px;
+}
+
+.plugin-import .prompt-input {
+  position: static;
+  transform: none;
+  width: auto;
+  flex: 1;
+}
+
+.plugin-import button {
+  padding: 4px 12px;
+  border: 1px solid #24402a;
+  border-radius: 0;
+  color: #8cff8c;
+  background: #020402;
+  cursor: pointer;
+  font: inherit;
+}
+
+.plugin-import button:hover {
+  color: #020402;
+  background: #8cff8c;
+  border-color: #8cff8c;
+}
+
+.plugin-warn {
+  margin-top: 6px;
+  color: #6fae74;
+  font-size: 11px;
 }
 
 @media (max-width: 520px) {

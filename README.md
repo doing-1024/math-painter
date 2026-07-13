@@ -13,10 +13,13 @@ The project is intentionally small: TypeScript, Vite, Canvas 2D, native DOM, a J
 - JSON import/export for editable scenes
 - Clean SVG export for publishing diagrams
 - Extensible `ShapeDefinition` registry for adding new geometry types
+- Plugin system: official plugins one-click installable from the in-app **Plugins** panel (`EXT` button / `` ` `` key); third-party plugins importable by URL
 
 ## Links
 
 - [Linux Do](https://linux.do/)
+- [Plugin guide (EXTENSIONS.md)](./EXTENSIONS.md)
+- [Official plugins repo](https://github.com/doing-1024/math-painter-ext)
 
 ## Development
 
