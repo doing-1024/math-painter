@@ -33,7 +33,7 @@ export function buildToolbar(opts: { editor: Editor; tools: ToolRegistry; fileIn
     for (const tool of tools.list()) {
       const button = document.createElement('button');
       button.dataset.tool = tool.id;
-      const label = toolLabel(tool.id);
+      const label = tool.label ?? toolLabel(tool.id);
       button.textContent = label;
       button.title = `${tool.id} (${label})`;
       const onClick = tool.id === 'polygon' && onPolygon ? onPolygon : () => editor.setTool(tool.id);

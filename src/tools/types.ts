@@ -46,6 +46,10 @@ export interface EditorContext {
 
 export interface Tool {
   id: string;
+  /** Short toolbar/legend label (e.g. the tool's key). Plugin tools set this
+   *  so the toolbar does not fall back to the first letter of the id (which
+   *  would collide with built-in tools, e.g. "arrow" -> "A" == arc). */
+  label?: string;
   cursor?: string;
   activate?(ctx: EditorContext): void;
   deactivate?(ctx: EditorContext): void;
