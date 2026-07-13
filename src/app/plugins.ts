@@ -100,13 +100,20 @@ export class PluginManager {
   }
 
   private async installURL(url: string, name: string, official: boolean): Promise<void> {
-    let code = await this.cacheGet(url);
-    if (code == null) {
+    // Network-first: always try to fetch the latest plugin code (so updates
+    // propagate), and only fall back to the cached copy when offline.
+    let code: string | null = null;
+    try {
       const res = await fetch(url);
-      if (!res.ok) throw new Error(`fetch ${res.status}`);
-      code = await res.text();
-      await this.cachePut(url, code);
+      if (res.ok) {
+        code = await res.text();
+        await this.cachePut(url, code);
+      }
+    } catch {
+      /* offline: fall back to cache below */
     }
+    if (code == null) code = await this.cacheGet(url);
+    if (code == null) throw new Error(`cannot load ${url}`);
     // Tell bundled plugins where their external assets live (e.g. KaTeX
     // CSS/fonts). Read once at module top-level, so set it before importing.
     const base = official ? this.officialBase : new URL(url).origin;
