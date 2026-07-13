@@ -1,0 +1,24 @@
+{
+  "cold": {
+    "label": "cold",
+    "fcp": null,
+    "dcl": 46,
+    "load": 47,
+    "requests": 3,
+    "scripts": 1,
+    "styles": 1,
+    "transferKB": 19.8,
+    "memMB": 1.4,
+    "wallMs": 132
+  },
+  "warm": {
+    "fcp": null,
+    "load": 40
+  },
+  "memBaselineMB": 1.4,
+  "memAfter50ShapesMB": 1.6,
+  "memDelta50ShapesMB": 0.14,
+  "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ]
+}

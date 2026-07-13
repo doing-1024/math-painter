@@ -1,0 +1,11 @@
+{
+  "method": "headless Chrome (agent-browser) Performance API; 全部为线上站点实测，含真实网络延迟。math-painter = https://mp.doi.l.cd",
+  "products": [
+    { "name": "math-painter", "ours": true,  "fcp": 328,   "load": 281,   "transferKB": 20.6,  "req": 5,   "memMB": 0.9, "deps": 0, "url": "mp.doi.l.cd" },
+    { "name": "Excalidraw",   "ours": false, "fcp": 6100,  "load": 6072,  "transferKB": 866.7, "req": 20,  "memMB": 9,   "deps": null, "url": "excalidraw.com" },
+    { "name": "GeoGebra",     "ours": false, "fcp": 664,   "load": 2413,  "transferKB": 2908.6,"req": 23,  "memMB": 38,  "deps": null, "url": "geogebra.org/geometry" },
+    { "name": "tldraw",       "ours": false, "fcp": 4644,  "load": 3630,  "transferKB": 2633.1,"req": 119, "memMB": 23.4,"deps": null, "url": "tldraw.com" },
+    { "name": "Desmos",       "ours": false, "fcp": 1880,  "load": 13847, "transferKB": 1805.7,"req": 18,  "memMB": 21.7,"deps": null, "url": "desmos.com" },
+    { "name": "draw.io",      "ours": false, "fcp": 740,   "load": 20439, "transferKB": 2880.4,"req": 18,  "memMB": 18.5,"deps": null, "url": "app.diagrams.net" }
+  ]
+}

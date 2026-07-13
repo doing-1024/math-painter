@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 712" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+  <rect x="0" y="0" width="900" height="712" fill="#ffffff"/>
+  <text x="20" y="34" font-size="18" font-weight="700" fill="#0a8a0a">math-painter vs 同类：headless Chrome 实测</text>
+  <text x="20" y="56" font-size="12" fill="#80868b">六项指标均为线上站点真实测量（性能 API），含真实网络延迟；math-painter = https://mp.doi.l.cd。纵轴为对数刻度。</text>
+  <text x="20" y="90" font-size="14" font-weight="700" fill="#202124">首屏可交互 FCP</text>
+  <text x="20" y="118.66666666666667" font-size="12.5" fill="#0a8a0a" font-weight="700">math-painter</text>
+  <rect x="168" y="107.66666666666667" width="640" height="14" rx="7" fill="#f1f3f4"/>
+  <rect x="168" y="107.66666666666667" width="143" height="14" rx="7" fill="#0a8a0a"/>
+  <text x="319" y="118.66666666666667" font-size="12" font-weight="600" fill="#0a8a0a">328ms</text>
+  <text x="20" y="144" font-size="12.5" fill="#202124" font-weight="400">Excalidraw</text>
+  <rect x="168" y="133" width="640" height="14" rx="7" fill="#f1f3f4"/>
+  <rect x="168" y="133" width="497" height="14" rx="7" fill="#9aa0a6"/>
+  <text x="673" y="144" font-size="12" font-weight="600" fill="#5f6368">6.1s</text>
+  <text x="20" y="169.33333333333331" font-size="12.5" fill="#202124" font-weight="400">GeoGebra</text>
+  <rect x="168" y="158.33333333333331" width="640" height="14" rx="7" fill="#f1f3f4"/>
+  <rect x="168" y="158.33333333333331" width="229" height="14" rx="7" fill="#9aa0a6"/>
+  <text x="405" y="169.33333333333331" font-size="12" font-weight="600" fill="#5f6368">664ms</text>
+  <text x="20" y="194.66666666666666" font-size="12.5" fill="#202124" font-weight="400">tldraw</text>
+  <rect x="168" y="183.66666666666666" width="640" height="14" rx="7" fill="#f1f3f4"/>
+  <rect x="168" y="183.66666666666666" width="464" height="14" rx="7" fill="#9aa0a6"/>
+  <text x="640" y="194.66666666666666" font-size="12" font-weight="600" fill="#5f6368">4.6s</text>
+  <text x="20" y="219.99999999999997" font-size="12.5" fill="#202124" font-weight="400">Desmos</text>
+  <rect x="168" y="208.99999999999997" width="640" height="14" rx="7" fill="#f1f3f4"/>
+  <rect x="168" y="208.99999999999997" width="354" height="14" rx="7" fill="#9aa0a6"/>
+  <text x="530" y="219.99999999999997" font-size="12" font-weight="600" fill="#5f6368">1.9s</text>
+  <text x="20" y="245.33333333333331" font-size="12.5" fill="#202124" font-weight="400">draw.io</text>
+  <rect x="168" y="234.33333333333331" width="640" height="14" rx="7" fill="#f1f3f4"/>
+  <rect x="168" y="234.33333333333331" width="242" height="14" rx="7" fill="#9aa0a6"/>
+  <text x="418" y="245.33333333333331" font-size="12" font-weight="600" fill="#5f6368">740ms</text>
+  <text x="20" y="284" font-size="14" font-weight="700" fill="#202124">首屏传输体积</text>
+  <text x="20" y="312.6666666666667" font-size="12.5" fill="#0a8a0a" font-weight="700">math-painter</text>
+  <rect x="168" y="301.6666666666667" width="640" height="14" rx="7" fill="#f1f3f4"/>
+  <rect x="168" y="301.6666666666667" width="74" height="14" rx="7" fill="#0a8a0a"/>
+  <text x="250" y="312.6666666666667" font-size="12" font-weight="600" fill="#0a8a0a">20.6KB</text>
+  <text x="20" y="338" font-size="12.5" fill="#202124" font-weight="400">Excalidraw</text>
+  <rect x="168" y="327" width="640" height="14" rx="7" fill="#f1f3f4"/>
+  <rect x="168" y="327" width="460" height="14" rx="7" fill="#9aa0a6"/>
+  <text x="636" y="338" font-size="12" font-weight="600" fill="#5f6368">866.7KB</text>
+  <text x="20" y="363.33333333333337" font-size="12.5" fill="#202124" font-weight="400">GeoGebra</text>
+  <rect x="168" y="352.33333333333337" width="640" height="14" rx="7" fill="#f1f3f4"/>
+  <rect x="168" y="352.33333333333337" width="584" height="14" rx="7" fill="#9aa0a6"/>
+  <text x="760" y="363.33333333333337" font-size="12" font-weight="600" fill="#5f6368">2908.6KB</text>
+  <text x="20" y="388.6666666666667" font-size="12.5" fill="#202124" font-weight="400">tldraw</text>
+  <rect x="168" y="377.6666666666667" width="640" height="14" rx="7" fill="#f1f3f4"/>
+  <rect x="168" y="377.6666666666667" width="574" height="14" rx="7" fill="#9aa0a6"/>
+  <text x="750" y="388.6666666666667" font-size="12" font-weight="600" fill="#5f6368">2633.1KB</text>
+  <text x="20" y="414" font-size="12.5" fill="#202124" font-weight="400">Desmos</text>
+  <rect x="168" y="403" width="640" height="14" rx="7" fill="#f1f3f4"/>
+  <rect x="168" y="403" width="535" height="14" rx="7" fill="#9aa0a6"/>
+  <text x="711" y="414" font-size="12" font-weight="600" fill="#5f6368">1805.7KB</text>
+  <text x="20" y="439.3333333333333" font-size="12.5" fill="#202124" font-weight="400">draw.io</text>
+  <rect x="168" y="428.3333333333333" width="640" height="14" rx="7" fill="#f1f3f4"/>
+  <rect x="168" y="428.3333333333333" width="583" height="14" rx="7" fill="#9aa0a6"/>
+  <text x="759" y="439.3333333333333" font-size="12" font-weight="600" fill="#5f6368">2880.4KB</text>
+  <text x="20" y="478" font-size="14" font-weight="700" fill="#202124">首屏网络请求</text>
+  <text x="20" y="506.6666666666667" font-size="12.5" fill="#0a8a0a" font-weight="700">math-painter</text>
+  <rect x="168" y="495.6666666666667" width="640" height="14" rx="7" fill="#f1f3f4"/>
+  <rect x="168" y="495.6666666666667" width="194" height="14" rx="7" fill="#0a8a0a"/>
+  <text x="370" y="506.6666666666667" font-size="12" font-weight="600" fill="#0a8a0a">5个</text>
+  <text x="20" y="532" font-size="12.5" fill="#202124" font-weight="400">Excalidraw</text>
+  <rect x="168" y="521" width="640" height="14" rx="7" fill="#f1f3f4"/>
+  <rect x="168" y="521" width="362" height="14" rx="7" fill="#9aa0a6"/>
+  <text x="538" y="532" font-size="12" font-weight="600" fill="#5f6368">20个</text>
+  <text x="20" y="557.3333333333333" font-size="12.5" fill="#202124" font-weight="400">GeoGebra</text>
+  <rect x="168" y="546.3333333333333" width="640" height="14" rx="7" fill="#f1f3f4"/>
+  <rect x="168" y="546.3333333333333" width="379" height="14" rx="7" fill="#9aa0a6"/>
+  <text x="555" y="557.3333333333333" font-size="12" font-weight="600" fill="#5f6368">23个</text>
+  <text x="20" y="582.6666666666666" font-size="12.5" fill="#202124" font-weight="400">tldraw</text>
+  <rect x="168" y="571.6666666666666" width="640" height="14" rx="7" fill="#f1f3f4"/>
+  <rect x="168" y="571.6666666666666" width="577" height="14" rx="7" fill="#9aa0a6"/>
+  <text x="753" y="582.6666666666666" font-size="12" font-weight="600" fill="#5f6368">119个</text>
+  <text x="20" y="608" font-size="12.5" fill="#202124" font-weight="400">Desmos</text>
+  <rect x="168" y="597" width="640" height="14" rx="7" fill="#f1f3f4"/>
+  <rect x="168" y="597" width="349" height="14" rx="7" fill="#9aa0a6"/>
+  <text x="525" y="608" font-size="12" font-weight="600" fill="#5f6368">18个</text>
+  <text x="20" y="633.3333333333333" font-size="12.5" fill="#202124" font-weight="400">draw.io</text>
+  <rect x="168" y="622.3333333333333" width="640" height="14" rx="7" fill="#f1f3f4"/>
+  <rect x="168" y="622.3333333333333" width="349" height="14" rx="7" fill="#9aa0a6"/>
+  <text x="525" y="633.3333333333333" font-size="12" font-weight="600" fill="#5f6368">18个</text>
+  <text x="20" y="682" font-size="10.5" fill="#9aa0a6">注：纵轴为对数刻度（同面板内可比比例）。FCP=首次内容绘制（用户感知就绪）。math-painter 已为线上实测（传输仅 20KB，含网络延迟）。</text>
+  <text x="20" y="698" font-size="10.5" fill="#9aa0a6">竞品「完全加载」偏慢多因其持续拉取资源（Desmos 13.8s / draw.io 20s 的 load 事件），但 FCP 已反映其体量差距。</text>
+</svg>
