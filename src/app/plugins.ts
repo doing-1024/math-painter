@@ -2,7 +2,7 @@ import type { MathPainter } from '../core/extension';
 
 /** Default source for the official plugin list. Users behind a slow network
  *  can repoint this to a mirror via the `math-painter:plugin-base` setting. */
-const DEFAULT_OFFICIAL_BASE = 'https://ext.math-painter.pages.dev';
+const DEFAULT_OFFICIAL_BASE = 'https://mp-ext.doi.l.cd';
 const BASE_KEY = 'math-painter:plugin-base';
 const ENABLED_KEY = 'math-painter:plugins';
 const CACHE_NAME = 'math-painter:plugins';

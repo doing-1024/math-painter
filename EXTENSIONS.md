@@ -105,7 +105,8 @@ published, switch to `import type { … } from 'math-painter'`.
 ## Official list & hosting
 
 `plugins.json` at the root of `math-painter-ext` is deployed to Cloudflare
-Pages and fetched from `https://ext.math-painter.pages.dev/plugins.json`. The
+Pages and fetched from `https://mp-ext.doi.l.cd/plugins.json` (overridable via the
+`math-painter:plugin-base` setting). The
 base URL is stored in `localStorage` under `math-painter:plugin-base`; users
 behind a slow network can repoint it to a mirror.
 

@@ -101,7 +101,7 @@
 
 ### 8. 扩展生态（已完成，内核保持精简）
 - [x] 冻结扩展 API：`src/core/extension.ts` 的 `MathPainter`（apiVersion + registerShape/registerTool/bindKey），内核内部可改而不破坏已发布插件
-- [x] 插件加载器 `src/app/plugins.ts`：官方列表自动拉取（默认 CF Pages `https://ext.math-painter.pages.dev`，可改 `math-painter:plugin-base` 指向镜像）+ 一键安装；第三方按 URL 导入（带确认警告）；Cache Storage 本地缓存 + 启用列表持久化 + 启动时重载（离线可用）
+- [x] 插件加载器 `src/app/plugins.ts`：官方列表自动拉取（默认 `https://mp-ext.doi.l.cd`，可改 `math-painter:plugin-base` 指向镜像）+ 一键安装；第三方按 URL 导入（带确认警告）；Cache Storage 本地缓存 + 启用列表持久化 + 启动时重载（离线可用）
 - [x] 插件面板 `src/app/plugin-panel.ts`：工具栏 `EXT` 按钮 / `` ` `` 键打开，官方卡片列表 + 第三方导入框
 - [x] `EXTENSIONS.md`：插件契约 + 如何编写插件
 - [x] 官方插件仓库 `math-painter-ext`（CF Pages 托管 + `plugins.json` 索引 + 样板 `arrow` 插件：多文件原生 ESM，已 `tsc` 构建并验证 `activate` 正确注册 shape/tool/key）

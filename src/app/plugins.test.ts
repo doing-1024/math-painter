@@ -30,8 +30,8 @@ function makeEnv(): Env {
     { name: 'future', title: 'Future', description: 'needs newer api', version: '1.0.0', minApi: 2, entry: 'plugins/future/index.js' },
   ];
   const fetchMap = new Map<string, string>([
-    ['https://ext.math-painter.pages.dev/plugins.json', JSON.stringify(list)],
-    ['https://ext.math-painter.pages.dev/plugins/arrow/index.js', 'code-arrow'],
+    ['https://mp-ext.doi.l.cd/plugins.json', JSON.stringify(list)],
+    ['https://mp-ext.doi.l.cd/plugins/arrow/index.js', 'code-arrow'],
     ['https://third.example.com/p.js', 'code-third'],
   ]);
   const fetch = vi.fn(async (url: string) => {
