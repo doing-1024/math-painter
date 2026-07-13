@@ -51,6 +51,9 @@ keep working. A plugin declares the minimum API it needs via `minApi` in its
 
 ## Writing a plugin
 
+> Full bilingual (中文 / English) plugin-development guide:
+> <https://github.com/doing-1024/math-painter-ext/blob/main/PLUGINS.md>
+
 See <https://github.com/doing-1024/math-painter-ext> for the canonical layout
 and a worked `arrow` example. In short:
 
